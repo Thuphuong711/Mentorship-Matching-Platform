@@ -1,0 +1,18 @@
+:root {
+    /* Main Brand Colors */
+    --primary-orange: #FF7F50; /* Coral/Orange */
+    --secondary-orange: #FFA07A; /* Light Orange (Hover effect) */
+  
+    /* Backgrounds */
+    --background-light: #F9F9F9; /* Light Gray */
+    --background-white: #FFFFFF; /* Pure White */
+  
+    /* Text Colors */
+    --text-dark: #333333;
+    --text-medium: #666666;
+  
+    /* Status Colors */
+    --error-red: #E94E77;
+    --success-green: #7ED321;
+  }
+  

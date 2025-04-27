@@ -1,0 +1,116 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: var(--background-light);
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container {
+    text-align: center;
+    background: var(--background-light);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .logo img {
+    width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  h1,h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+  
+  button {
+    padding: 12px;
+    background-color: var(--primary-orange);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-orange);
+  }
+  
+  .link-text {
+    margin-top: 1rem;
+    color: var(--text-medium);
+    font-size: 0.9rem;
+  }
+  
+  .link-text a {
+    color: var(--primary-orange);
+    text-decoration: none;
+  }
+  
+  .link-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .language-switcher {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+  
+  .language-switcher a {
+    color: var(--text-medium);
+    margin: 0 5px;
+    text-decoration: none;
+  }
+  
+  .language-switcher a:hover {
+    color: var(--primary-orange);
+  }
+
+  .errorMessage{
+    color: var(--error-red);
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container {
+      margin: 20px;
+      padding: 1.5rem;
+    }
+  }
+  

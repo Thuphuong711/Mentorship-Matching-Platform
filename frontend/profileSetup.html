@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile Setup - Mentorship Platform</title>
+    <link rel="stylesheet" href="./css/profileSetup.css">
+</head>
+
+<body>
+    <div class="profile-container">
+        <h1>Profile Setup</h1>
+        <h3>Edit your profile for mentorship.</h3>
+
+        <div class="profile-picture-section">
+            <img id="profileImage" src="./images/default-profile-image.png" alt="Default Profile Image">
+            <button type="button" id="uploadBtn" class="upload-button">Upload Profile Picture</button>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+        </div>
+
+
+        <form id="profileForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">Name</label>
+                    <input type="text" id="Name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" required>
+                </div>
+            </div>
+
+
+            <!-- Gender -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Role -->
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" required>
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="Mentee">Mentee</option>
+                        <option value="Mentor">Mentor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="skillInput">Skills</label>
+                <div class="skills-container">
+                    <input type="text" id="skillInput" placeholder="Enter a skill">
+                    <button type="button" id="addSkill" class="add-button">Add</button>
+                </div>
+                <div id="skillsList" class="skills-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="interestInput">Interest</label>
+                <div class="skills-container">
+                    <input type="text" id="interestInput" placeholder="Enter an interest">
+                    <button type="button" id="addInterest" class="add-button">Add</button>
+                </div>
+                <div id="interestsList" class="interests-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea id="bio" rows="5" placeholder="Enter a brief bio"></textarea>
+            </div>
+
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
+
+    <script src="./js/profileSetup.js"></script>
+
+</body>
+
+</html>
