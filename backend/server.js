@@ -7,7 +7,7 @@ const db = require('./config/db_config'); // connect to the database
 const cors = require('cors');
 const multer = require('multer');
 const upload = multer();
-
+const imagekit = require('./config/imagekit_config'); 
 
 dotenv.config();
 const app = express();
@@ -92,8 +92,23 @@ app.post('/login', (req,res) => {
     })
 })
 
-app.post('/uploadProfileImage', (req,res) => {
+app.post('/uploadProfileImage',upload.single('file'), async(req,res) => {
+    try{
+        const file = req.file;
+        if(!file){
+            return res.status(400).json({message: 'No file uploaded'});
+        }
 
+        const uploadResponse = await imagekit.upload({
+            file: file.buffer.toString('base64'),
+            fileName: file.originalname,
+            folder: 'profile-images',
+        });
+        res.status(200).json({url: uploadResponse.url});
+    } catch(err){
+        console.error("Error uploading file:", err);
+        res.status(500).json({message: 'Failed to upload profile image'});
+    }
 })
 
 app.post('/profile', (req,res) => {

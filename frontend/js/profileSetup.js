@@ -14,10 +14,10 @@ function getEmailFromToken(){
 
 async function upLoadImageToImageKit(file){
     const formData = new FormData();
-    formData.append("image", file)
+    formData.append("file", file)
 
     try{
-        const response = await fetch("https://localhost:8080/uploadProfileImage", {
+        const response = await fetch("http://localhost:8080/uploadProfileImage", {
             method: "POST",
             body: formData,     
         });
