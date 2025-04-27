@@ -1,0 +1,200 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #fdf7f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.search-container input {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px 20px 10px 20px; /* extra left padding for icon */
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+
+.filters {
+    display: flex;
+    justify-content: center; /* Keep everything aligned to the left */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* allow wrapping on very small screens */
+}
+
+.all-filters-button {
+    display: flex;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background-color: #ccc;
+    margin: 0 10px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filters button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filter-select {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    appearance: none; /* remove native ugly dropdown arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 16px;
+}
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown when hovering */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Placeholder for user card (will be injected real ones with js code) */
+.user-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.user-info p {
+    margin: 5px 0;
+    color: gray;
+    font-size: 14px;
+}
+
+.tags {
+    margin-top: 8px;
+}
+
+.tag {
+    display: inline-block;
+    background: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.connect-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-buttons {
+        justify-content: center;
+    }
+
+    .divider {
+        width: 80%; /* make the divider horizontal line */
+        height: 1px;
+        margin: 10px 0;
+    }
+}
