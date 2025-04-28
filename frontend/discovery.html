@@ -16,24 +16,45 @@
 
     <div class="filters">
       <div class="all-filters-button">
-        <button>All filters</button>
+        <button id="openAdvancedFiltersBtn">Advanced filters</button>
       </div>
 
       <div class="divider"></div>
-
       <div class="filter-buttons">
         <button class="filter-btn" data-field="name">Name</button>
         <button class="filter-btn" data-field="email">Email</button>
-        <button class="filter-btn" data-field="role" data-value="Mentee">Mentee</button>
-        <button class="filter-btn" data-field="role" data-value="Mentor">Mentor</button>
-        <button class="filter-btn" data-field="skills">Skills</button>
-        <button class="filter-btn" data-field="interests">Interests</button>
+        <button class="filter-btn" data-field="role" data-value="Mentee">
+          Mentee
+        </button>
+        <button class="filter-btn" data-field="role" data-value="Mentor">
+          Mentor
+        </button>
       </div>
     </div>
 
     <!-- This is the placeholder for the user list. -->
     <!-- Later this will be replaced with the actual user list by JS code -->
     <div id="userList" class="user-list"></div>
+
+    <!-- Advanced Filter Modal -->
+    <div id="advancedFiltersModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Advanced Filters</h2>
+          <span id="closeModal" class="close">&times;</span>
+        </div>
+
+        <div class="modal-body" id="filterContainer">
+          <!-- Placeholder for dynamic filter -->
+        </div>
+
+        <button id="addFilterBtn">+ Add Filter Option</button>
+        <div class="modal-footer">
+          <button id="cancelBtn">Cancel</button>
+          <button id="applyBtn">Apply</button>
+        </div>
+      </div>
+    </div>
   </body>
 
   <script src="./js/discovery.js"></script>
