@@ -83,46 +83,12 @@ h1 {
     gap: 15px;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
 
-.dropbtn {
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    background: white;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 120px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    z-index: 1;
-    margin-top: 5px;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 10px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 14px;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Show dropdown when hovering */
-.dropdown:hover .dropdown-content {
-    display: block;
+.filter-btn.active,
+.filter-select.active {
+    background-color: #2563eb;
+    color: white;
+    border: 1px solid #2563eb;
 }
 
 /* Placeholder for user card (will be injected real ones with js code) */

@@ -29,7 +29,7 @@ document.getElementById("registerForm").addEventListener("submit", async(e) => {
         if(response.ok){
             console.log("User registered successfully:", data.message);
             localStorage.setItem("token", data.token); // Store the token in local storage
-            window.location.href = "profileSetup.html"; // Redirect to profile setup page
+            window.location.href = "login.html"; // Redirect to login page
         } else {
             const errorMessage = document.getElementById("errorMessage");
             errorMessage.textContent = data.message;

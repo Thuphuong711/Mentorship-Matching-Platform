@@ -121,8 +121,8 @@ app.post('/profile', (req,res) => {
     const q = "UPDATE user SET name=?, dob=?, gender=?, role=?, skills=?, interests=?, bio=?, profileImageUrl=? WHERE email = ?";
 
     // convert skills and interests array to strings to store in the database
-    const skillsString = skills.join(', ');
-    const interestsString = interests.join(', ');
+    const skillsString = skills.join(',');
+    const interestsString = interests.join(',');
     db.query(q, [name, dob, gender, role, skillsString, interestsString, bio, profileImageUrl, email], (err,result) => {
         if(err){
             console.error("Database insert error:" , err);

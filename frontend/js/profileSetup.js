@@ -160,6 +160,7 @@ profileForm.addEventListener("submit", async(e) => {
         if(response.ok){
             alert("Profile updated successfully!");
             console.log("Profile updated successfully:", data.message);
+            window.location.href = "home.html"; // Redirect to the profile page after successful update
         } else {
             alert("Error updating profile");
             console.log("Error updating profile:", data.message);
