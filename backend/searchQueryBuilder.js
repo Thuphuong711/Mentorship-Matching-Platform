@@ -1,4 +1,4 @@
-export function buildSearchQuery(basicFilters, advancedFilters){
+function buildSearchQuery(basicFilters, advancedFilters){
     let query = `SELECT * FROM user`;
 
     let basicParts = [];
@@ -73,3 +73,4 @@ export function buildSearchQuery(basicFilters, advancedFilters){
     return {query, queryParams};
 }
 
+module.exports = buildSearchQuery;
