@@ -270,11 +270,8 @@ h1 {
     background-color: #218838;
 }
 
-/* hard code the size of dummy div to keep filter row align */
-.connector-placeholder {
-    width: 49.48px;
-    height: 17.72px; 
-  }
+
+
 
 @media (max-width: 600px) {
     .filters {

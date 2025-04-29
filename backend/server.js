@@ -8,7 +8,7 @@ const cors = require('cors');
 const multer = require('multer');
 const upload = multer();
 const imagekit = require('./config/imagekit_config'); 
-
+const searchQueryBuilder = require('./searchQueryBuilder'); // import the search query builder
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -63,7 +63,7 @@ app.post('/login', (req,res) => {
     if(!email || !password){
         return res.status(400).json({message: 'Please fill all required fields'});
     }
-    const q = "SELECT * FROM user WHERE email = ?";
+    const q = "SELECT * FROM user WHERE email = ?"; // handle SQL injection
     db.query(q,[email], (err,result) => {
         if(err){
             console.error("Error checking email:", err);
@@ -131,6 +131,22 @@ app.post('/profile', (req,res) => {
 
         res.status(201).json({message: 'Profile created successfully'});
     })
+})
+
+
+app.post('/discovery/search-users', (req,res) => {
+    const {basicFilters, advancedFilters} = req.body;
+    const {query, queryParams} = searchQueryBuilder(basicFilters, advancedFilters); // call the search query builder function to get the query and query parameters
+    console.log("Query:", query); 
+    console.log("Query Params:", queryParams); 
+
+    try{
+        const [rows] = db.execute(query, queryParams); // execute the query with the parameters
+        res.status(200).json(rows)
+    } catch(err){
+        console.error("Error executing query:", err);
+        return res.status(500).json({message: 'Internal server error'});
+    }
 })
 
 app.use((req, res) => {
