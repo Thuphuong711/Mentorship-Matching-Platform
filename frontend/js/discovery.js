@@ -108,7 +108,7 @@ async function searchAndRenderUser(searchData) {
   console.log("advancedFilters", searchData.advancedFilters.length);
   try {
     const response = await fetch(
-      "http://localhost:8080/discovery/search-users",
+      "https://mentorship-matching-platform-nscn.onrender.com/discovery/search-users",
       {
         method: "POST",
         headers: {
@@ -175,7 +175,7 @@ async function createUserCard(user) {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/discovery/mentorship-request",
+        "https://mentorship-matching-platform-nscn.onrender.com/discovery/mentorship-request",
         {
           method: "POST",
           headers: {

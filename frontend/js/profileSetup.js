@@ -30,7 +30,7 @@ async function upLoadImageToImageKit(file) {
   formData.append("file", file);
 
   try {
-    const response = await fetch("http://localhost:8080/uploadProfileImage", {
+    const response = await fetch("https://mentorship-matching-platform-nscn.onrender.com/uploadProfileImage", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -165,7 +165,7 @@ profileForm.addEventListener("submit", async (e) => {
   const saveProfileBtn = document.getElementById("saveProfileBtn");
   saveProfileBtn.addEventListener("click", async () => {
     try {
-      const response = await fetch("http://localhost:8080/profile", {
+      const response = await fetch("https://mentorship-matching-platform-nscn.onrender.com/profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchUserProfile(email) {
     try {
       const response = await fetch(
-        `http://localhost:8080/profile?email=${email}`,
+        `https://mentorship-matching-platform-nscn.onrender.com/profile?email=${email}`,
         {
           method: "GET",
           headers: {
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Deleting account for email:", email); // Log the email for debugging
       try {
         const response = await fetch(
-          "http://localhost:8080/profile/delete-account",
+          "https://mentorship-matching-platform-nscn.onrender.com/profile/delete-account",
           {
             method: "DELETE",
             headers: {

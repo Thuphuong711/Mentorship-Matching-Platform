@@ -24,7 +24,7 @@ function injectNav(id, file, callback) {
 async function handleAccept(id) {
   try {
     const response = await fetch(
-      `http://localhost:8080/home/mentorship-requests/${id}/status`,
+      `https://mentorship-matching-platform-nscn.onrender.com/home/mentorship-requests/${id}/status`,
       {
         method: "PUT",
         headers: {
@@ -52,7 +52,7 @@ async function handleAccept(id) {
 async function handleDecline(id) {
   try {
     const response = await fetch(
-      `http://localhost:8080/home/mentorship-requests/${id}/status`,
+      `https://mentorship-matching-platform-nscn.onrender.com/home/mentorship-requests/${id}/status`,
       {
         method: "PUT",
         headers: {
@@ -80,7 +80,7 @@ async function handleDecline(id) {
 async function handleCancel(id) {
   try {
     const response = await fetch(
-      `http://localhost:8080/home/mentorship-requests/${id}/cancel`,
+      `https://mentorship-matching-platform-nscn.onrender.com/home/mentorship-requests/${id}/cancel`,
       {
         method: "DELETE",
         headers: {
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      `http://localhost:8080/home/mentorship-requests/${userId}`,
+      `https://mentorship-matching-platform-nscn.onrender.com/home/mentorship-requests/${userId}`,
       {
         method: "GET",
         headers: {
