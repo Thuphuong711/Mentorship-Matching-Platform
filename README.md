@@ -1,8 +1,8 @@
 # Mentorship-Matching-Platform
 
-# 1/ Deployed link : https://mentorship-matching-platform-phuong-le.onrender.com/login
+## 1/ Deployed link : https://mentorship-matching-platform-phuong-le.onrender.com/login
 
-# 2/ Technology used:
+## 2/ Technology used:
 
 - Front-end: HTML, CSS, vanilla JavaScript and no framework or library
 
@@ -27,7 +27,7 @@
 * Both front-end and back-end : [Render.com](https://render.com/)
 * MySql Datbase: [Railway](https://railway.com/)
 
-# 3/ Basic Set up (Test locally)
+## 3/ Basic Set up (Test locally)
 npm init (all defaults are fine)
 npm install
 cd backend
