@@ -28,7 +28,7 @@
 * MySql Datbase: [Railway](https://railway.com/)
 
 ## 3/ Basic Set up (Test locally)
-npm init (all defaults are fine)
-npm install
-cd backend
-node server.js
+- npm init (all defaults are fine)
+- npm install
+- cd backend
+- node server.js
