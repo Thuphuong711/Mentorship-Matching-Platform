@@ -8,7 +8,7 @@ function injectNav(id, file, callback) {
     .then((html) => {
       document.getElementById(id).innerHTML = html;
       if (typeof callback === "function") {
-        callback(); // after injecting the top nav bar, call the callback function (window.logout)
+        callback(); // after injecting the top nav bar, call the callback function (window.logout) for logout functionality
       }
     })
     .catch((err) => console.error(`Error loading ${file}:`, err));
@@ -53,6 +53,7 @@ function buildSearchFilters() {
     selectedFields.push(btn.getAttribute("data-field"));
   });
 
+
   //Basic search filter
   if (searchInputValue) {
     if (selectedFields.includes("name")) {
@@ -69,6 +70,9 @@ function buildSearchFilters() {
       if (roleButton) {
         basicFilters.role = roleButton.getAttribute("data-value");
       }
+    }
+    if(!selectedFields.includes("name") && !selectedFields.includes("email")){
+      basicFilters.name = searchInputValue;
     }
   }
 
@@ -100,6 +104,8 @@ function buildSearchFilters() {
 async function searchAndRenderUser(searchData) {
   // send data to the server
   console.log("Search Data sent to server:", searchData);
+  console.log("basicFilters", searchData.basicFilters);
+  console.log("advancedFilters", searchData.advancedFilters.length);
   try {
     const response = await fetch(
       "http://localhost:8080/discovery/search-users",
@@ -285,26 +291,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   injectNav("bottom-nav", "bottomNavBar.html");
-  //Handle clicking on filter buttons
-  document.querySelectorAll(".filter-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      // Special handling for 'role' buttons
-      if (button.getAttribute("data-field") === "role") {
-        //Deactivate all other role buttons first
-        document
-          .querySelectorAll(".filter-btn[data-field='role']")
-          .forEach((roleBtn) => {
-            roleBtn.classList.remove("active");
-          });
+  
+ // Handle clicking on filter buttons
+document.querySelectorAll(".filter-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button.getAttribute("data-field") === "role") {
+      const wasActive = button.classList.contains("active");
 
-        // Activate only the clicked button
+      // Deactivate all role buttons
+      document.querySelectorAll(".filter-btn[data-field='role']").forEach((btn) =>
+        btn.classList.remove("active")
+      );
+
+      // Reactivate only if it wasn't already active
+      if (!wasActive) {
         button.classList.add("active");
-      } else {
-        // Toggle the active class for other filter buttons
-        button.classList.toggle("active");
       }
-    });
+    } else {
+      // Other filter buttons (name/email/skills) toggle freely
+      button.classList.toggle("active");
+    }
   });
+});
+
 
   const openModalBtn = document.getElementById("openAdvancedFiltersBtn");
   const modal = document.getElementById("advancedFiltersModal");

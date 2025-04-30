@@ -99,9 +99,9 @@ h1 {
 
 .filter-btn.active,
 .filter-select.active {
-    background-color: #2563eb;
+    background-color: orange;
     color: white;
-    border: 1px solid #2563eb;
+    border: 1px solid rgb(82, 56, 9);
 }
 
 /* Placeholder for user card (will be injected real ones with js code) */

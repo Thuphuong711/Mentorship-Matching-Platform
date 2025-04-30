@@ -9,17 +9,16 @@ const userId = JSON.parse(localStorage.getItem("user")).userId;
 
 // Function to inject the navigation bar HTML into the page
 function injectNav(id, file, callback) {
-    fetch(file)
-      .then((res) => res.text())
-      .then((html) => {
-        document.getElementById(id).innerHTML = html;
-        if (typeof callback === "function") {
-          callback(); // after injecting the top nav bar, call the callback function (window.logout)
-        }
-      })
-      .catch((err) => console.error(`Error loading ${file}:`, err));
-  }
-  
+  fetch(file)
+    .then((res) => res.text())
+    .then((html) => {
+      document.getElementById(id).innerHTML = html;
+      if (typeof callback === "function") {
+        callback(); // after injecting the top nav bar, call the callback function (window.logout)
+      }
+    })
+    .catch((err) => console.error(`Error loading ${file}:`, err));
+}
 
 //Function for mentor to accept the request
 async function handleAccept(id) {
@@ -30,7 +29,7 @@ async function handleAccept(id) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ status: "accepted" }), // Update the status to 'accepted'
       }
@@ -58,7 +57,7 @@ async function handleDecline(id) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ status: "declined" }), // Update the status to 'declined'
       }
@@ -85,8 +84,8 @@ async function handleCancel(id) {
       {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }
     );
     const data = await response.json();
@@ -118,34 +117,34 @@ function showModal(type) {
 
     if (type === "pending") {
       modalBody.innerHTML += isSender
-        ? `<p> You sent a request to ${otherName}</p>
-            <button onclick="handleCancel(${req.id})">Cancel</button><hr/>`
-        : `<p> ${otherName} sent you a request</p>
-            <button onclick="handleAccept(${req.id})">Accept</button>
-            <button onclick="handleDecline(${req.id})">Decline</button><hr/> `;
+        ? `<div class="request-row">
+        <p> You sent a request to ${otherName}</p>
+            <button class="cancel-request-btn request-row-btn" onclick="handleCancel(${req.id})">Cancel</button></div><hr/>`
+        : `<div class="request-row">
+        <p> ${otherName} sent you a request</p>
+            <button class="accept-request-btn request-row-btn" onclick="handleAccept(${req.id})">Accept</button>
+            <button class="decline-request-btn request-row-btn" onclick="handleDecline(${req.id})">Decline</button></div><hr/> `;
     }
 
     if (type === "accepted") {
       modalBody.innerHTML += isSender
         ? `<p>${otherName} accepted your request</p><hr/>`
         : `<p>You accepted ${otherName}'s request</p><hr/>`;
-
     }
   });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    injectNav("top-nav", "topNavBar.html", () => {
-        console.log("Top navigation bar loaded successfully.");
-        window.logout = function() {
-          localStorage.removeItem("user");
-          localStorage.removeItem("token");
-          console.log("Removed user data from local storage");
-          window.location.href = "login.html";
-        };
-      });
+  injectNav("top-nav", "topNavBar.html", () => {
+    console.log("Top navigation bar loaded successfully.");
+    window.logout = function () {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      console.log("Removed user data from local storage");
+      window.location.href = "login.html";
+    };
+  });
   injectNav("bottom-nav", "bottomNavBar.html");
-
 
   document.getElementById("discover-btn").addEventListener("click", () => {
     window.location.href = "discovery.html";
@@ -160,8 +159,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }
     );
     const data = await response.json();
@@ -176,7 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       pendingNumber.innerText = pendingCount;
       acceptedNumber.innerText = acceptedCount;
 
-      if(pendingCount === 0){
+      if (pendingCount === 0) {
         modalBody.innerHTML = "<p>No pending requests</p>";
       } else {
         modalBody.innerHTML = "<p>Pending requests</p>";

@@ -7,12 +7,13 @@
     <title>Mentorship Matching Platform - Profile Setup </title>
     <link rel="stylesheet" href="./css/profileSetup.css">
     <link rel="stylesheet" href="./css/topNavBar.css" />
+    <link rel="stylesheet" href="./css/bottomNavBar.css" />
 </head>
 
 <body>
-   
+    <div id="top-nav"></div>
     <div class="profile-container">
-        <div id="top-nav"></div>
+       
         <h1>Profile Setup</h1>
         <h3>Edit your profile for mentorship.</h3>
 
@@ -83,9 +84,13 @@
                 <textarea id="bio" rows="5" placeholder="Enter a brief bio"></textarea>
             </div>
 
-            <button type="submit">Save Profile</button>
+            <button id="saveProfileBtn" type="submit">Save Profile</button>
+            <button id="deleteAccountBtn" class="danger-btn hidden">Delete Account</button>
+
         </form>
+       
     </div>
+     <div id="bottom-nav"></div>
 
     <script src="./js/profileSetup.js"></script>
 

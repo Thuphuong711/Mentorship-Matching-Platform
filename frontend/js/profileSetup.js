@@ -162,29 +162,32 @@ profileForm.addEventListener("submit", async (e) => {
     email: email,
   };
 
-  try {
-    const response = await fetch("http://localhost:8080/profile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(profileData),
-    });
+  const saveProfileBtn = document.getElementById("saveProfileBtn");
+  saveProfileBtn.addEventListener("click", async () => {
+    try {
+      const response = await fetch("http://localhost:8080/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(profileData),
+      });
 
-    const data = await response.json();
-    if (response.ok) {
-      alert("Profile updated successfully!");
-      console.log("Profile updated successfully:", data.message);
-      window.location.href = "home.html"; // Redirect to the profile page after successful update
-    } else {
-      alert("Error updating profile");
-      console.log("Error updating profile:", data.message);
+      const data = await response.json();
+      if (response.ok) {
+        alert("Profile updated successfully!");
+        console.log("Profile updated successfully:", data.message);
+        window.location.href = "home.html"; // Redirect to the profile page after successful update
+      } else {
+        alert("Error updating profile");
+        console.log("Error updating profile:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating profile: ", error);
+      alert("An error occurred. Please try again later.");
     }
-  } catch (error) {
-    console.error("Error updating profile: ", error);
-    alert("An error occurred. Please try again later.");
-  }
+  });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -223,7 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function populateFormWithProfile(data) {
     document.getElementById("Name").value = data.name || "";
-    document.getElementById("dob").value = data.dob || "";
+    document.getElementById("dob").value = data.dob
+      ? new Date(data.dob).toISOString().split("T")[0]
+      : "";
     document.getElementById("gender").value = data.gender || "";
     document.getElementById("role").value = data.role || "";
     document.getElementById("bio").value = data.bio || "";
@@ -237,10 +242,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderSkills();
     renderInterests();
+    // undhide the delete button if the user is in edit mode (already has a profile which includes the required fields)
+    const isEditMode = data.name && data.dob && data.gender && data.role;
+    if (isEditMode) {
+      document.getElementById("deleteAccountBtn").classList.remove("hidden");
+    }
   }
 
   const email = getEmailFromToken();
   if (email) {
     fetchUserProfile(email);
   }
+
+  document
+    .getElementById("deleteAccountBtn")
+    .addEventListener("click", async () => {
+      const confirmed = confirm(
+        "Are you sure you want to delete your account? This action cannot be undone."
+      );
+      if (!confirmed) return; // If the user cancels, do nothing
+
+      const email = getEmailFromToken(); // Get the email from the token
+      console.log("Deleting account for email:", email); // Log the email for debugging
+      try {
+        const response = await fetch(
+          "http://localhost:8080/profile/delete-account",
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({ email: email }), // Send the email to identify the account to be deleted
+          }
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          alert("Account deleted successfully. Redirecting to login page...");
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "login.html"; // Redirect to the login page after successful deletion
+        } else {
+          alert("Error deleting account: " + result.message);
+        }
+      } catch (error) {
+        console.error("Error deleting account: ", error);
+        alert(
+          "An error occurred while deleting the account. Please try again later."
+        );
+      }
+    });
 });

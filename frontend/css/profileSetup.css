@@ -6,24 +6,25 @@
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background: #fdf7f4;
     padding: 100px 20px 80px; /* top space for nav, bottom space for footer */
     min-height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column; /* stack children vertically */
+  align-items: center;
+    overflow-x: hidden;
   }
   
   .profile-container {
-    background: #ffffff;
+    background: #fdf7f4;
     padding-left: 40px;
     padding-right: 40px;
-    
     width: 100%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
   
   h1 {
+    margin-top: 20px;
     text-align: center;
     font-size: 2rem;
     margin-bottom: 10px;
@@ -143,22 +144,6 @@
     text-decoration: underline;
   }
   
-  button[type="submit"] {
-    margin-top: 30px;
-    padding: 14px;
-    background-color: orange;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: darkorange;
-  }
 
   .interest-item, .skill-item {
     display: inline-flex;
@@ -211,6 +196,31 @@
   
   .upload-button:hover {
     background-color: darkorange;
+  }
+
+  button[type="submit"], .danger-btn {
+    margin-top: 30px;
+    padding: 14px;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: darkorange;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .danger-btn {
+    background-color: red;
   }
 
   /* Responsive: stack columns on smaller screens */
