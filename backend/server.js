@@ -8,6 +8,7 @@ const cors = require("cors");
 const multer = require("multer");
 const upload = multer();
 const imagekit = require("./config/imagekit_config");
+const checkAuth = require("./middleware/checkAuth"); // import the authentication middleware
 const searchQueryBuilder = require("./searchQueryBuilder"); // import the search query builder
 dotenv.config();
 const app = express();
@@ -34,10 +35,10 @@ app.use(cors());
       });
     }
     // prevent SQL injection
-    const q = "SELECT * FROM user WHERE email = ?";
+    const checkQuery = "SELECT * FROM user WHERE email = ?";
     try {
-      const [existing] = await db.execute(q, [email]); // check if email already exists
-      if (result.length > 0) {
+      const [existing] = await db.execute(checkQuery, [email]); // check if email already exists
+      if (existing.length > 0) {
         return res.status(400).json({
           message: "Email already exists",
         });
@@ -45,8 +46,8 @@ app.use(cors());
 
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const q = "INSERT INTO user(email,password) VALUES(?, ?)";
-      await db.execute(q, [email, hashedPassword]); // insert new user into the database
+      const insertQuery  = "INSERT INTO user(email,password) VALUES(?, ?)";
+      await db.execute(insertQuery , [email, hashedPassword]); // insert new user into the database
       const token = jwt.sign(
         {
           email,
@@ -119,7 +120,7 @@ app.use(cors());
     }
   });
 
-  app.post("/uploadProfileImage", upload.single("file"), async (req, res) => {
+  app.post("/uploadProfileImage", checkAuth, upload.single("file"), async (req, res) => {
     try {
       const file = req.file;
       if (!file) {
@@ -144,7 +145,7 @@ app.use(cors());
     }
   });
 
-  app.post("/profile", async (req, res) => {
+  app.post("/profile", checkAuth, async (req, res) => {
     const {
       name,
       dob,
@@ -194,7 +195,9 @@ app.use(cors());
     }
   });
 
-  app.post("/discovery/search-users", async (req, res) => {
+
+  // endpoint for searching users
+  app.post("/discovery/search-users", checkAuth, async (req, res) => {
     const { basicFilters, advancedFilters } = req.body;
 
     try {
@@ -226,7 +229,8 @@ app.use(cors());
     }
   });
 
-  app.post("/discovery/mentorship-request", async (req, res) => {
+  //endpoint for sending mentorship request
+  app.post("/discovery/mentorship-request", checkAuth, async (req, res) => {
     const { from_user, to_user } = req.body;
 
     if (!from_user || !to_user) {
@@ -283,7 +287,8 @@ app.use(cors());
     }
   });
 
-  app.get("/home/mentorship-requests/:userId", async (req, res) => {
+  // endpoint for getting all the mentorship requests for a user
+  app.get("/home/mentorship-requests/:userId", checkAuth, async (req, res) => {
     const { userId } = req.params;
     try {
       const query = `
@@ -305,8 +310,33 @@ app.use(cors());
   });
 
 
+
+  app.put("/home/mentorship-requests/:id/status", checkAuth, async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body; // status can be 'accepted' or 'declined'
+
+    if (!status) {
+      return res.status(400).json({
+        message: "Status is required",
+      });
+    }
+
+    try {
+      await db.execute(
+        `UPDATE mentorship_requests SET status = ? WHERE id = ?`,
+        [status, id]
+      );
+      res.json({ message: `Mentorship request ${status} successfully` });
+    } catch (error) {
+      console.error("Error updating mentorship request:", error);
+      return res.status(500).json({
+        message: "Internal server error",
+      });
+    }
+  });
+
   //Cancel mentorship request
-  app.delete("/home/mentorship-requests/:id/cancel", async (req, res) => {
+  app.delete("/home/mentorship-requests/:id/cancel", checkAuth, async (req, res) => {
     const {id} = req.params;
     try{
         await db.execute(`DELETE FROM mentorship_requests WHERE id = ?`, [id]);
