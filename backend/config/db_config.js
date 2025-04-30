@@ -33,7 +33,28 @@ async function initDB() {
       ) ENGINE = InnoDB;
     `;
 
+
+    const createMentorshipRequestsTableQuery = `
+    CREATE TABLE IF NOT EXISTS mentorship_requests (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      from_user INT,
+      to_user INT,
+      status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+      rejected_count INT DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      FOREIGN KEY (from_user) REFERENCES user(userId)
+        ON DELETE CASCADE
+        ON UPDATE RESTRICT,
+      FOREIGN KEY (to_user) REFERENCES user(userId)
+        ON DELETE CASCADE
+        ON UPDATE RESTRICT
+    ) ENGINE = InnoDB;
+  `;
+
+
     await connection.query(createTableQuery);
+    await connection.query(createMentorshipRequestsTableQuery);
     console.log("Table created successfully");
 
     return connection;
