@@ -4,6 +4,9 @@ function buildSearchQuery(basicFilters, advancedFilters){
     let basicParts = [];
     let advancedParts = [];
     let queryParams = [];
+   // if there are no filters, default to searching all names
+
+
 
     //Basic Filters
     if(basicFilters){
@@ -64,9 +67,16 @@ function buildSearchQuery(basicFilters, advancedFilters){
         }
     }
 
-    // if there is basic and advanced filters, add WHERE clause to the query
-    // if there are no filters, just return the query all data entries in the db
-    if(whereParts.length > 0){
+
+    // if there are no filters, default to searching all names
+    if(basicParts.length === 0 && advancedParts.length === 0){
+        whereParts.push("name LIKE ?");
+        queryParams.push("%");
+    }
+
+       // if there is basic and advanced filters, add WHERE clause to the query
+    
+       if(whereParts.length > 0){
         query += " WHERE " + whereParts.join(" ");
     }
 

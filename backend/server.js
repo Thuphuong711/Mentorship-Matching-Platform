@@ -200,6 +200,25 @@ app.use(cors());
     }
   });
 
+  app.delete("/profile/delete-account", checkAuth, async (req, res) => {
+    const email = req.body.email;
+    if(!email){
+      return res.status(400).json({ message: "Email is required" });
+    }
+    console.log("Email received in backend:", email);
+    try{
+      const [result] = await db.execute("DELETE FROM user WHERE email = ?", [email]);
+
+      if(result.affectedRows === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(200).json({ message: "Account deleted successfully" });
+    } catch(err){
+      console.error("Error deleting account:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.get("/profile", checkAuth, async (req, res) => {
     const email = req.query.email;
     if (!email) return res.status(400).json({ message: "Email is required" });
@@ -220,7 +239,6 @@ app.use(cors());
   // endpoint for searching users
   app.post("/discovery/search-users", checkAuth, async (req, res) => {
     const { basicFilters, advancedFilters } = req.body;
-
     try {
       const { query, queryParams } = searchQueryBuilder(
         basicFilters,
