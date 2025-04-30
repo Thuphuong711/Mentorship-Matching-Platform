@@ -7,54 +7,46 @@
     <title>Mentorship Matching Platform - Home</title>
     <link rel="stylesheet" href="./css/colors.css" />
     <link rel="stylesheet" href="./css/home.css" />
+    <link rel="stylesheet" href="./css/topNavBar.css" />
+    <link rel="stylesheet" href="./css/bottomNavBar.css" />
 </head>
 
 <body>
-    <!-- Top Navigation (desktop only) -->
-    <nav class="navigation">
-        <div class="logo">Mentorship Matching Platform</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Discover Mentorship</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Logout</a></li>
-        </ul>
-    </nav>
+    <div id="top-nav"></div>
 
     <!-- Main Content -->
     <main class="main-container">
-        <h1>Welcome back, User!</h1>
+        <h1 id="welcome-message">Welcome back!</h1>
         <p>Are you ready to connect and grow today?</p>
 
         <div class="dashboard-cards">
             <div class="small-cards">
-                <div class="small-card">
+                <div class="small-card" id="pending">
                     <h2 class="no-wrap">Pending Requests</h2>
-                    <p>2 requests</p>
+                    <p id="pending-number"></p>
                 </div>
 
-                <div class="small-card">
+                <div class="small-card" id="accepted">
                     <h2 class="no-wrap">Accepted Requests</h2>
-                    <p>5 requests</p>
+                    <p id="accepted-number"></p>
                 </div>
             </div>
 
-            <button class="discover-button">Discover Mentorship</button>
+            <button id="discover-btn" class="discover-button">Discover Mentorship</button>
+
         </div>
     </main>
 
-    <!-- Bottom Navigation (mobile only) -->
-    <nav class="bottom-nav">
-        <a href="#">
-            <img src="./images/home.png" alt="Home" />
-            Home</a>
-        <a href="#">
-            <img src="./images/discoverMentorship.png" alt="Discover Mentorship" />
-            Discover Mentorship</a>
-        <a href="#">
-            <img src="./images/profile.png" alt="Profile" />
-            Profile</a>
-    </nav>
+    <div id="bottom-nav"></div>
+
+    <!-- Request Modal -->
+    <div id="request-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
 </body>
 <script src="./js/home.js"></script>
 

@@ -46,8 +46,8 @@ app.use(cors());
 
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(password, salt);
-      const insertQuery  = "INSERT INTO user(email,password) VALUES(?, ?)";
-      await db.execute(insertQuery , [email, hashedPassword]); // insert new user into the database
+      const insertQuery = "INSERT INTO user(email,password) VALUES(?, ?)";
+      await db.execute(insertQuery, [email, hashedPassword]); // insert new user into the database
       const token = jwt.sign(
         {
           email,
@@ -120,30 +120,35 @@ app.use(cors());
     }
   });
 
-  app.post("/uploadProfileImage", checkAuth, upload.single("file"), async (req, res) => {
-    try {
-      const file = req.file;
-      if (!file) {
-        return res.status(400).json({
-          message: "No file uploaded",
+  app.post(
+    "/uploadProfileImage",
+    checkAuth,
+    upload.single("file"),
+    async (req, res) => {
+      try {
+        const file = req.file;
+        if (!file) {
+          return res.status(400).json({
+            message: "No file uploaded",
+          });
+        }
+
+        const uploadResponse = await imagekit.upload({
+          file: file.buffer.toString("base64"),
+          fileName: file.originalname,
+          folder: "profile-images",
+        });
+        res.status(200).json({
+          url: uploadResponse.url,
+        });
+      } catch (err) {
+        console.error("Error uploading file:", err);
+        res.status(500).json({
+          message: "Failed to upload profile image",
         });
       }
-
-      const uploadResponse = await imagekit.upload({
-        file: file.buffer.toString("base64"),
-        fileName: file.originalname,
-        folder: "profile-images",
-      });
-      res.status(200).json({
-        url: uploadResponse.url,
-      });
-    } catch (err) {
-      console.error("Error uploading file:", err);
-      res.status(500).json({
-        message: "Failed to upload profile image",
-      });
     }
-  });
+  );
 
   app.post("/profile", checkAuth, async (req, res) => {
     const {
@@ -195,7 +200,23 @@ app.use(cors());
     }
   });
 
+  app.get("/profile", checkAuth, async (req, res) => {
+    const email = req.query.email;
+    if (!email) return res.status(400).json({ message: "Email is required" });
 
+    try {
+      const q = "SELECT * FROM user WHERE email = ?";
+      const [rows] = await req.app.locals.db.execute(q, [email]);
+
+      if (rows.length === 0)
+        return res.status(404).json({ message: "Profile not found" });
+
+      res.json(rows[0]);
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
   // endpoint for searching users
   app.post("/discovery/search-users", checkAuth, async (req, res) => {
     const { basicFilters, advancedFilters } = req.body;
@@ -287,6 +308,7 @@ app.use(cors());
     }
   });
 
+  
   // endpoint for getting all the mentorship requests for a user
   app.get("/home/mentorship-requests/:userId", checkAuth, async (req, res) => {
     const { userId } = req.params;
@@ -309,46 +331,51 @@ app.use(cors());
     }
   });
 
+  app.put(
+    "/home/mentorship-requests/:id/status",
+    checkAuth,
+    async (req, res) => {
+      const { id } = req.params;
+      const { status } = req.body; // status can be 'accepted' or 'declined'
 
+      if (!status) {
+        return res.status(400).json({
+          message: "Status is required",
+        });
+      }
 
-  app.put("/home/mentorship-requests/:id/status", checkAuth, async (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body; // status can be 'accepted' or 'declined'
-
-    if (!status) {
-      return res.status(400).json({
-        message: "Status is required",
-      });
+      try {
+        await db.execute(
+          `UPDATE mentorship_requests SET status = ? WHERE id = ?`,
+          [status, id]
+        );
+        res.json({ message: `Mentorship request ${status} successfully` });
+      } catch (error) {
+        console.error("Error updating mentorship request:", error);
+        return res.status(500).json({
+          message: "Internal server error",
+        });
+      }
     }
-
-    try {
-      await db.execute(
-        `UPDATE mentorship_requests SET status = ? WHERE id = ?`,
-        [status, id]
-      );
-      res.json({ message: `Mentorship request ${status} successfully` });
-    } catch (error) {
-      console.error("Error updating mentorship request:", error);
-      return res.status(500).json({
-        message: "Internal server error",
-      });
-    }
-  });
+  );
 
   //Cancel mentorship request
-  app.delete("/home/mentorship-requests/:id/cancel", checkAuth, async (req, res) => {
-    const {id} = req.params;
-    try{
+  app.delete(
+    "/home/mentorship-requests/:id/cancel",
+    checkAuth,
+    async (req, res) => {
+      const { id } = req.params;
+      try {
         await db.execute(`DELETE FROM mentorship_requests WHERE id = ?`, [id]);
-        res.json({message: `Mentorship request cancelled successfully`});
-    } catch(error){
+        res.json({ message: `Mentorship request cancelled successfully` });
+      } catch (error) {
         console.error("Error cancelling mentorship request:", error);
         return res.status(500).json({
-            message: "Internal server error",
+          message: "Internal server error",
         });
+      }
     }
-  });
-
+  );
 
   app.use((req, res) => {
     res

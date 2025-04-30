@@ -7,18 +7,18 @@
   body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
+    padding: 100px 20px 80px; /* top space for nav, bottom space for footer */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    align-items: flex-start;
   }
   
   .profile-container {
     background: #ffffff;
-    padding: 40px;
-    border-radius: 16px;
-    max-width: 700px;
+    padding-left: 40px;
+    padding-right: 40px;
+    
     width: 100%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
@@ -123,6 +123,11 @@
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.9rem;
+  }
+
+  .required {
+    color: red;
+    margin-left: 2px;
   }
   
   .add-button {

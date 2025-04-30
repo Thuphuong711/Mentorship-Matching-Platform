@@ -1,0 +1,39 @@
+.bottom-nav {
+    display: none;
+  }
+  
+  .bottom-nav img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 768px) {
+    .navigation {
+      display: none;
+    }
+  
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.8rem 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid;
+      background-color: orange;
+    }
+  
+    .bottom-nav a {
+      text-decoration: none;
+      color: black;
+      font-size: 0.8rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+  

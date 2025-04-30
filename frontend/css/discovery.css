@@ -1,9 +1,15 @@
-body {
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: #fdf7f4;
+  }
+/* body {
     font-family: Arial, sans-serif;
     background: #fdf7f4;
     margin: 0;
     padding: 20px;
-}
+} */
 
 h1 {
     text-align: center;
@@ -155,6 +161,12 @@ h1 {
     font-size: 14px;
 }
 
+.disabled{
+    background-color: grey;
+    color: white;
+    cursor: not-allowed;
+}
+
 .hidden {
     display: none;
 }
@@ -175,7 +187,7 @@ h1 {
     margin: 10% auto;
     padding: 20px;
     border-radius: 8px;
-    width: 350px;
+    width: 380px;
     max-width: 80%;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -271,7 +283,16 @@ h1 {
 }
 
 
-
+.no-results {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #888;
+  }
+  
+  .hidden {
+    display: none;
+  }
 
 @media (max-width: 600px) {
     .filters {
