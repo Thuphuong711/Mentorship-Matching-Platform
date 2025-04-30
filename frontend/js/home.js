@@ -118,18 +118,18 @@ function showModal(type) {
     if (type === "pending") {
       modalBody.innerHTML += isSender
         ? `<div class="request-row">
-        <p> You sent a request to ${otherName}</p>
+        <p class="request-text"> You sent a request to ${otherName}</p>
             <button class="cancel-request-btn request-row-btn" onclick="handleCancel(${req.id})">Cancel</button></div><hr/>`
         : `<div class="request-row">
-        <p> ${otherName} sent you a request</p>
+        <p class="request-text"> ${otherName} sent you a request</p>
             <button class="accept-request-btn request-row-btn" onclick="handleAccept(${req.id})">Accept</button>
             <button class="decline-request-btn request-row-btn" onclick="handleDecline(${req.id})">Decline</button></div><hr/> `;
     }
 
     if (type === "accepted") {
       modalBody.innerHTML += isSender
-        ? `<p>${otherName} accepted your request</p><hr/>`
-        : `<p>You accepted ${otherName}'s request</p><hr/>`;
+        ? `<p class="request-text">${otherName} accepted your request</p><hr/>`
+        : `<p class="request-text">You accepted ${otherName}'s request</p><hr/>`;
     }
   });
 }

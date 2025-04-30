@@ -171,7 +171,7 @@ async function createUserCard(user) {
   console.log("User ID:", user.userId);
 
   connectButton.addEventListener("click", async () => {
-    alert(`Connection request sent to ${user.name}`);
+    alert(`You send connection request to ${user.name}`);
 
     try {
       const response = await fetch(
@@ -193,7 +193,7 @@ async function createUserCard(user) {
       const data = await response.json();
       if (response.ok) {
         console.log("Connection request sent successfully:", data.message);
-        alert(`Connection request sent to ${user.name}`);
+        alert(`Connection request has been successfully sent to ${user.name}`);
         connectButton.textContent = "Request Sent"; // Change button text to indicate request sent
         connectButton.disabled = true; // Disable button after sending request to prevent multiple clicks when the request is sent and in pending status
         connectButton.classList.add("disabled"); // Add a class to style the disabled button
